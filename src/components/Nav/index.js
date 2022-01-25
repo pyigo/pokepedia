@@ -18,8 +18,13 @@ const Nav = () => {
                 <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div className="navbar-nav">
                         <Link className="nav-link active" aria-current="page" to="pokemon/list">Pokemon List</Link>
-                        <Link className="nav-link" to="login">Login</Link>
-
+                        {
+                            !user
+                                ?
+                                <Link className="nav-link" to="login">Login</Link>
+                                :
+                                <Link className="nav-link" to="favorite">Favorites</Link>
+                        }
                     </div>
                 </div>
             </div>
