@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useState, useContext } from "react";
 import { Routes, Route } from 'react-router-dom'
 // Import Components
 // importing the component Nav, react is programmed to look for index.
@@ -21,16 +21,20 @@ function App() {
   // then we can use useContext hooks to access our context
   // const user = useContext(Usercontext)
   // console.log(user)
+
+  // We will pass on our user to all of App's children via the provider value prop
+  const [user, setUser] = useState('')
+
   return (
     <div className="App">
 
 
       {/* All context comes with the provider component. this allows us to use this as a wrapper and share information to all of its children */}
-      <UserContext.Provider value={'Christina'}>
+      <UserContext.Provider value={user}>
         <Nav />
         {/* We need to wrap our routes insIde react router Route componenet */}
         <Routes>
-          <Route path='login' element={<Login />} />
+          <Route path='login' element={<Login setUser={setUser} />} />
         </Routes>
       </UserContext.Provider>
     </div>
