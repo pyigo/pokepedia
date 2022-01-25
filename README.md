@@ -1,3 +1,5 @@
+-u == --set -upstream defines where we are going to be pushing into. You only need to run this command once. When you push you only do git push instead of git push origin main
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
