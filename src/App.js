@@ -23,6 +23,7 @@ function App() {
       {/* All context comes with the provider component. this allows us to use this as a wrapper and share information to all of its children */}
       <Usercontext.Provider value={'Christina'}>
         <Nav />
+
       </Usercontext.Provider>
     </div>
   );
