@@ -58,7 +58,7 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="login" element={<Login setUser={setUser} />} />
 
-          <Route path="pokemon/list" element={<PokemonList pokeList={pokeList} itemsPerPage={4} />} />
+          <Route path="pokemon/list" element={<PokemonList pokeList={pokeList} itemsPerPage={8} />} />
         </Routes>
       </UserContext.Provider>
     </div>
