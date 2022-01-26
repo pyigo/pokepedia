@@ -5,7 +5,7 @@ import { useContext } from "react";
 
 const Nav = () => {
     const user = useContext(Usercontext)
-    console.log('nav', user)
+    // console.log('nav', user)
 
     // Below We will use link from react router to replace our anchor tag
     return (
