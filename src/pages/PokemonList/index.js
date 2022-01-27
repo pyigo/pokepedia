@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
 import axios from "axios";
-
+import './styles.css'
 const PokemonList = ({ pokeList, itemsPerPage }) => {
     // console.log('props', pokeList)
     // We start with an empty list of pokeList.
@@ -27,6 +27,7 @@ const PokemonList = ({ pokeList, itemsPerPage }) => {
 
             // console.log(urls)
             currPagePokemon(pokeURLs)
+            const length = pokeList.length ? pokeList.length : 1118
             // setCurrentPokemon(pokeList.slice(itemOffset, endOffset));
 
 
@@ -64,14 +65,19 @@ const PokemonList = ({ pokeList, itemsPerPage }) => {
 
     const Pokemon = () => {
         return (
-            <>
+            <div id="pokemon-container">
                 {currentPokemon &&
                     currentPokemon.map((pokemon) => (
-                        <div>
-                            <h3>{pokemon.name}</h3>
+                        <div className="card poke-card" key={pokemon.id}>
+                            <img src={pokemon.sprites.front_shiny} className="card-img-top" alt="..." />
+                            <div className="card-body">
+                                <h5 className="card-title">{pokemon.name}</h5>
+                                <p className="card-text">Order: {pokemon.id}</p>
+                                <a href="#" className="btn btn-primary">Go somewhere</a>
+                            </div>
                         </div>
                     ))}
-            </>
+            </div>
         );
     };
 
