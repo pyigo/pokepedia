@@ -9,6 +9,7 @@ import Nav from "./components/Nav";
 import Login from "./pages/Login";
 import PokemonList from "./pages/PokemonList";
 import Home from "./pages/Home";
+import Favorites from "./pages/Favorites";
 
 // contexts
 import UserContext from "./contexts/UserContext";
@@ -26,13 +27,14 @@ const App = () => {
 
   // We will pass on our user to all of App's children via the provider value prop
   const [user, setUser] = useState("");
-  const [pokeList, setPokeList] = useState([])
+  const [pokeList, setPokeList] = useState([]);
+  const [favorites, setFavorites] = useState([]);
 
   useEffect(() => {
-    fetchPokemon()
+    fetchPokemon();
 
     // empty aray brackets are called DEPENDENCY ARRAY. ITS goal is to call useEffect once only when the DOM  component loads
-  }, [])
+  }, []);
 
   const fetchPokemon = async () => {
     try {
@@ -43,8 +45,13 @@ const App = () => {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
+  const addToFavorites = (pokemon) => {
+    // We want to trigger this function to update our state
+    console.log("we added", pokemon);
+    setFavorites([...favorites, pokemon]);
+  };
 
   // console.log("this is pokelist", pokeList)
 
@@ -57,8 +64,20 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="login" element={<Login setUser={setUser} />} />
-
-          <Route path="pokemon/list" element={<PokemonList pokeList={pokeList} itemsPerPage={8} />} />
+          <Route
+            path="pokemon/list"
+            element={
+              <PokemonList
+                pokeList={pokeList}
+                itemsPerPage={8}
+                addToFavorites={addToFavorites}
+              />
+            }
+          />
+          <Route
+            path="favorites"
+            element={<Favorites favorites={favorites} />}
+          />
         </Routes>
       </UserContext.Provider>
     </div>

@@ -23,7 +23,7 @@ const Nav = () => {
                                 ?
                                 <Link className="nav-link" to="login">Login</Link>
                                 :
-                                <Link className="nav-link" to="favorite">Favorites</Link>
+                                <Link className="nav-link" to="favorites">Favorites</Link>
                         }
                     </div>
                 </div>

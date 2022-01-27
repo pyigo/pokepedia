@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
 import axios from "axios";
-import './styles.css'
-const PokemonList = ({ pokeList, itemsPerPage }) => {
+import "./styles.css";
+
+
+const PokemonList = ({ pokeList, itemsPerPage, addToFavorites }) => {
     // console.log('props', pokeList)
     // We start with an empty list of pokeList.
     const [currentPokemon, setCurrentPokemon] = useState(null);
@@ -17,50 +19,50 @@ const PokemonList = ({ pokeList, itemsPerPage }) => {
             const endOffset = itemOffset + itemsPerPage;
             console.log(`Loading pokeList from ${itemOffset} to ${endOffset}`);
 
+            const pokeURLs = [];
 
-            const pokeURLs = []
 
             for (let i = itemOffset; i < endOffset; i++) {
-                // console.log(i)
-                pokeURLs.push(`https://pokeapi.co/api/v2/pokemon/${i + 1}`)
+                if (i < 898) {
+                    pokeURLs.push(`https://pokeapi.co/api/v2/pokemon/${i + 1}`)
+                }
+                else {
+                    pokeURLs.push(`https://pokeapi.co/api/v2/pokemon/${i + 9102}`)
+                }
             }
 
             // console.log(urls)
-            currPagePokemon(pokeURLs)
-            const length = pokeList.length ? pokeList.length : 1118
+            currPagePokemon(pokeURLs);
+            const length = pokeList.length ? pokeList.length : 1118;
+
+            setPageCount(Math.ceil(length / itemsPerPage));
             // setCurrentPokemon(pokeList.slice(itemOffset, endOffset));
-
-
         } catch (error) {
-            console.log(error)
-
+            console.log(error);
         }
 
         // WE need to make a if condition so our currPagePokemon doesnt load if we dont have any data
 
-        // 
+        //
         // if (currentPokemon) currPagePokemon();
-        setPageCount(Math.ceil(pokeList.length / itemsPerPage));
+
     }, [itemOffset, itemsPerPage]);
 
     const currPagePokemon = (pokeURLs) => {
-
         try {
-            // axios.all makes  all concurrent requests 
-            // instaeda of doing 
-            const pokeArr = []
-            axios.all(pokeURLs.map(async (url) => {
-                const response = await axios.get(url)
-                // console.log(response.data)
-                pokeArr.push(response.data)
-                setCurrentPokemon(pokeArr.flat())
-                // console.log('POKE ARRAY', pokeArr)
-            }))
-        } catch (error) {
-
-        }
-
-        ;
+            // axios.all makes  all concurrent requests
+            // instaeda of doing
+            const pokeArr = [];
+            axios.all(
+                pokeURLs.map(async (url) => {
+                    const response = await axios.get(url);
+                    // console.log(response.data)
+                    pokeArr.push(response.data);
+                    setCurrentPokemon(pokeArr.flat());
+                    // console.log('POKE ARRAY', pokeArr)
+                })
+            );
+        } catch (error) { }
     };
 
     const Pokemon = () => {
@@ -69,15 +71,24 @@ const PokemonList = ({ pokeList, itemsPerPage }) => {
                 {currentPokemon &&
                     currentPokemon.map((pokemon) => (
                         <div className="card poke-card" key={pokemon.id}>
-                            <img src={pokemon.sprites.front_shiny} className="card-img-top" alt="..." />
+                            <img
+                                src={pokemon.sprites.front_shiny ?
+                                    pokemon.sprites.front_shiny : pokemon}
+                                className="card-img-top"
+                                alt="..."
+                            />
                             <div className="card-body">
                                 <h5 className="card-title">{pokemon.name}</h5>
                                 <p className="card-text">Order: {pokemon.id}</p>
-                                <a href="#" className="btn btn-primary">Go somewhere</a>
+                                <button className='btn btn-danger' onClick={() => addToFavorites(pokemon)}>Like</button>
+                                <a href="" className="btn btn-primary">
+                                    Go somewhere
+                                </a>
                             </div>
                         </div>
-                    ))}
-            </div>
+                    ))
+                }
+            </div >
         );
     };
 
